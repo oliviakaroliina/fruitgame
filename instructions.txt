@@ -1,0 +1,35 @@
+PELISÄÄNNÖT:
+Pelissä on pelilauta, jossa on hedelmiä. Alkutilanteessa missään kohdassa pelilautaa ei ole enempää kuin kaksi samaa hedelmää vierekkäin tai päällekkäin. 
+
+Voit vaihtaa kahden vierekkäisen tai päällekkäisen hedelmän paikkaa klikkaamalla molempia vuorotellen. Jos hedelmiä tulee näin vähintään kolme vierekkäin tai päällekkäin, hedelmät poistetaan, ja niiden yläpuoliset hedelmät putoavat alaspäin niin, että tyhjiä paikkoja on vain pelilaudan yläosassa. Tyhjiä paikkoja ei voi vaihtaa keskenään. Myös putoamisen jälkeen tulevat vähintään kolmen hedelmän sarjat poistetaan.
+
+Saat pisteitä jokaisesta vähintään kolmen hedelmän sarjasta. Kolmen hedelmän sarjasta saat kolme pistettä, mutta saat pisteitä sitä enemmän, mitä pidempiä saman hedelmän sarjoja saat poistettua. Pisteitä saa myös putoamisen seurauksena syntyneistä vähintään kolmen hedelmän sarjoista. Valitettavasti ekstrapisteitä ei kuitenkaan saa L-muotoisista hedelmien sarjoista, vaan tilanne tulkitaan niin, että siinä on kaksi erillistä sarjaa, toinen vaakasuunnassa ja toinen pystysuunnassa, paitsi tilanne, jossa sarjat yhdistävä hedelmä on molempien sarjojen kolmas hedelmä. Ekstrapisteitä saa siis vain silloin, kun hedelmiä on yli kolme peräkkäin joko vaaka- tai pystysuunnassa. Oikean laidan Score-näkymästä näet saamasi pisteet. Pisteitä ei saa eikä menetä, vaikka kahden hedelmän vaihdon seurauksena ei tulisi kolmen sarjaa.
+
+Oikeassa reunassa näet tulostaulun, jossa näkyy muiden pelaajien saamat pisteet. Jos kirjoitat nimesi Name-tekstin alla olevaan laatikkoon ja lopetat pelin Quit- tai Restart-nappia painamalla, nimesi ja pisteesi tulevat myös näkyviin laatikkoon. Sinun tulee kuitenkin saada pisteitä, jotta nimesi tulee näkyviin. Jos pelaat peliä uudestaan, syötä sama nimi kuin edellisellä pelikerralla, niin pisteesi päivittyvät, jos saat paremmat pisteet kuin edellisellä kerralla.
+
+Pelissä on ideana kilpailla siitä, kuinka paljon pisteitä pystyy keräämään eri pelikertojen välillä, tai toisen pelaajan kanssa. Voit pelata peliä niin kauan kuin haluat, ja lopettaa sitten Quit-nappia painamalla. Käytännössä pelistä ei voi kuitenkaan saada pisteitä sen jälkeen, kun pelilaudalla ei enää pysty muodostamaan kolmen hedelmän sarjoja. Vaihtoehtoisesti voit käynnistää pelilaudan uudelleen painamalla Restart-nappia.
+
+SUUNNITTELUPÄÄTÖKSET:
+- Hedelmiä on neljää erilaista: mansikoita, päärynöitä, banaaneja ja viinirypäleitä. 
+- Lauta on ruudukko, jossa on 8 riviä ja 11 saraketta.
+- Poistamisen ja putoamisen välissä on viive, joka on 200 ms.
+- Pelissä on pistelasku, joka näytetään käyttäjälle.
+- Pelissä huomioidaan kaikki yli kolmen hedelmän sarjat.
+- Hedelmät ovat painonappeja.
+- Napeissa on hedelmien kuvat.
+- Pelilaudan voi käynnistää uudelleen uuteen alkuasetelmaan Restart-napilla.
+- Oikeassa reunassa näkyy tulostaulu, joka sisältää pelaajien nimet ja saamat pisteet.
+
+OHJELMAN RAKENNE:
+1. Pelilauta luodaan.
+2. Kun käyttäjä klikkaa hedelmänappia pelilaudalla, ohjelma suorittaa swap-metodin if-lauseen (eli tallentaa napin, jota klikattiin, luokan attribuutteihin).
+3. Kun käyttäjä klikkaa toista nappia, ohjelma suorittaa swap-metodin else-lauseen (eli tallentaa toisen napin ja tekee swapin, jos napit ovat vierekkäisiä tai päällekkäisiä).
+4. Swap-metodi kutsuu find-metodeita swapin jälkeen.
+5. Find-metodit kutsuvat delete-metodia, jos löytyi jotain poistettavaa.
+6. Delete-metodi kutsuu drop-slottia poistettuaan kolmen sarjat.
+7. Drop-slotti kutsuu find-metodeja pudotettuaan mahdolliset hedelmät alaspäin.
+8. Ohjelma jatkaa kohtia 5-7 niin kauan kun find-metodi löytää jotain poistettavaa.
+9. Sitten käyttäjä voi klikata nappeja uudelleen, jolloin ohjelma suorittaa uudelleen kaikki kohdat kohdasta 2 eteenpäin.
+Lisäksi delete-metodi kutsuu add points -metodia, joka ei palauta mitään eikä kutsu mitään uutta metodia.
+10. Kun Quit- tai Restart-nappia painaa, ohjelma tallentaa nykyisen pelaajan nimen ja pisteet points.txt-tiedostoon.
+11. Quit-nappi sulkee ohjelman ja Restart-nappi käynnistää ohjelman uudelleen.
